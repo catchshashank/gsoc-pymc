@@ -1,4 +1,4 @@
-# bayes-corner
+# Predictively Oriented Posteriors 
 
 > A composable toolkit for prior and posterior predictive checks in PyMC.  
 > GSoC 2026 proposal prototype — Shashank Dubey, HEC Paris.
