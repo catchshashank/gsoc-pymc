@@ -3,7 +3,7 @@
 
 ### What This Is
 
-A self-contained prototype for proposing to bring principled, scoring-rule-grounded 
+A prototype for proposing to bring principled, scoring-rule-grounded 
 predictive model checking to PyMC.
 
 The core deliverable is `PredictiveCheck` — a composable wrapper around any
