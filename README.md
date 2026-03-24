@@ -1,12 +1,10 @@
-> **Predictive Model Checking for PyMC — GSoC 2026 Prototype**  
-> Shashank Dubey · HEC Paris  
-
+**Predictive Model Checking for PyMC — GSoC 2026 Prototype**  
 ---
 
-## What This Is
+### What This Is
 
-A self-contained prototype for a GSoC 2026 project proposing to bring
-principled, scoring-rule-grounded predictive model checking to PyMC.
+A self-contained prototype for proposing to bring principled, scoring-rule-grounded 
+predictive model checking to PyMC.
 
 The core deliverable is `PredictiveCheck` — a composable wrapper around any
 fitted PyMC model that reduces a full predictive checking workflow to four
@@ -25,11 +23,10 @@ checker.jensen_gap()       # How much predictive information is lost by posterio
 
 ## The Problem
 
-Running a complete predictive check in PyMC today requires a practitioner to
+Running a complete predictive check in PyMC currently requires to
 manually orchestrate `pm.sample_prior_predictive`, `pm.sample_posterior_predictive`,
 xarray extraction from InferenceData, custom plotting loops, and custom test-statistic
-calculations — before any scientific insight is produced. The consequence is
-predictable: most practitioners skip the checks entirely.
+calculations — before any scientific insight is produced. Therefore, most practitioners skip the checks entirely.
 
 This project wraps that boilerplate into a single coherent interface, analogous to
 how CausalPy abstracts causal inference model construction in PyMC.
@@ -40,7 +37,7 @@ how CausalPy abstracts causal inference model construction in PyMC.
 
 This prototype goes beyond standard ArviZ tooling. The `jensen_gap()` method
 implements a diagnostic directly from McLatchie et al. (2025),
-*Predictively Oriented Posteriors* (arXiv:2510.01915).
+[*Predictively Oriented Posteriors*] (https://arxiv.org/pdf/2510.01915?).
 
 The paper identifies a fundamental tension in Bayesian inference: standard
 posteriors — including Gibbs posteriors — are designed to find the best
@@ -58,15 +55,9 @@ By Jensen's inequality this gap is always ≥ 0. Crucially:
   would outperform the Bayes posterior at prediction
 
 This makes `jensen_gap()` a formal, quantitative diagnostic for model
-misspecification — not just a visual heuristic.
+misspecification.
 
 ---
-
-## The Demo Notebook
-
-**`gsoc_pymc_pro_demo.ipynb`** is fully self-contained. No cloning, no
-external imports — the entire `PredictiveCheck` class is defined inline in
-cell 1. Open in Colab and run top to bottom.
 
 ### What the notebook demonstrates
 
@@ -95,15 +86,14 @@ to bimodal data — and shows that:
 | Section | Content |
 |---|---|
 | 0 | Install dependencies |
-| 1 | Full `PredictiveCheck` library — defined inline |
+| 1 | Full `PredictiveCheck` library |
 | 2 | Generate misspecified data (bimodal truth, Gaussian model) |
 | 3 | Define model + prior predictive check |
 | 4 | Fit model with NUTS |
 | 5 | Posterior predictive check |
 | 6 | Bayesian p-values for mean, std, skew, kurtosis |
-| 7 | **Jensen Gap** — the PrO paper diagnostic |
+| 7 | **Jensen Gap** — the PrO diagnostic |
 | 8 | Sanity check: well-specified mixture model |
-| 9 | Summary comparison table |
 
 ---
 
@@ -124,53 +114,16 @@ wrong visually.
 
 ---
 
-## API Reference
-
-### `PredictiveCheck(model, idata, observed, var_name=None, random_seed=42)`
-
-Wraps a fitted PyMC model and its InferenceData.
-
-| Method | Returns | Description |
-|---|---|---|
-| `prior_check(n_samples=50)` | `Figure` | Visual overlay of prior predictive draws vs observed |
-| `posterior_check(n_samples=50)` | `Figure` | Visual overlay of posterior predictive draws vs observed |
-| `score(stat, group='posterior')` | `dict` | Bayesian p-value for one test statistic |
-| `summary(group='posterior')` | `dict` | All 7 built-in statistics at once |
-| `jensen_gap(mu_param, sigma_param)` | `dict` | Jensen Gap diagnostic from McLatchie et al. (2025) |
-
-Built-in statistics for `score()`: `mean`, `std`, `median`, `min`, `max`,
-`skew`, `kurtosis`, or `custom` with a user-supplied function.
-
----
-
 ## GSoC 2026 Roadmap
 
 - [x] `PredictiveCheck` core class — prior/posterior visual checks
 - [x] Bayesian p-values for built-in and custom test statistics
-- [x] Jensen Gap diagnostic grounded in McLatchie et al. (2025)
+- [x] Jensen Gap diagnostic
 - [ ] CRPS, energy score, and MMD scoring rules (Phase 2)
 - [ ] `PredictiveCheck.from_formula(formula, data)` constructor (Phase 3)
 - [ ] `checker.compare(other_checker)` — scoring-rule model comparison (Phase 3)
 - [ ] Hierarchical model support — group-level predictive checks (Phase 3)
 - [ ] Full test suite, documentation, PyMC-examples PR (Phase 4)
-
----
-
-## Dependencies
-
-```
-pymc >= 5.0
-arviz >= 0.17
-numpy >= 1.24
-matplotlib >= 3.7
-scipy >= 1.10
-```
-
-Install with:
-
-```bash
-pip install pymc arviz scipy
-```
 
 ---
 
