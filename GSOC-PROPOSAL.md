@@ -75,13 +75,13 @@ predictive model assessment should be evaluated through proper scoring
 rules applied to the **mixture predictive distribution** — not to
 individual parameter draws.
 
-This has a direct implementation implication. The standard Bayesian
+This has a direct implication. The standard Bayesian
 p-value computes a test statistic on individual posterior predictive
 draws and asks how often they exceed the observed statistic. A
 scoring-rule-grounded check goes further: it evaluates how much
 predictive information is lost by the model's structural limitations —
 i.e., it can detect the kind of "non-trivial misspecification" that
-standard checks miss because they only probe one statistic at a time.
+standard checks miss because they only probe one statistic at a time (McLatchie et al., 2025).
 
 This project implements both layers: the standard visual and p-value
 interface that practitioners need today, and a scoring-rule layer that
@@ -133,14 +133,10 @@ or model. It extends idata internally with a copy.
 plain Python dict, so results can be combined, saved, or passed to
 other tools without lock-in.
 
-**Honest about what it is.** The library does not hide the PyMC
-machinery — it reduces boilerplate without preventing access to the
-underlying idata, model, or ArviZ functions.
-
 ### 3.3 Prototype
 
-A working prototype is already available at:
-**github.com/[your-username]/bayes-corner**
+A working prototype is already available at [gsoc-pymc]
+(github.com/[catchshashank]/gsoc-pymc)
 
 The prototype implements the full `PredictiveCheck` class with prior
 and posterior visual checks, Bayesian p-values for seven built-in
@@ -148,7 +144,7 @@ statistics, and a `summary()` sweep. The example script demonstrates
 the API on a deliberately misspecified model (single Gaussian fitted
 to bimodal data), where the kurtosis and std p-values correctly
 identify the misspecification while the mean p-value does not — exactly
-the pattern the scoring-rule literature predicts.
+the pattern that scoring-rule in McLatchie et al. (2025) predicts.
 
 ---
 
@@ -161,7 +157,7 @@ common case correctly.
 
 - Finalise the `PredictiveCheck` class with full lazy evaluation and
   caching
-- Support multivariate models (multiple observed variables)
+- Support multivariate models
 - Handle the three common InferenceData configurations: (a) posterior
   only, (b) posterior + prior_predictive, (c) full
 - Implement all seven built-in test statistics with documented
@@ -170,8 +166,7 @@ common case correctly.
   misspecification signatures
 - First milestone: `checker.prior_check()`, `checker.posterior_check()`,
   and `checker.score()` all passing tests on linear regression,
-  logistic regression, and hierarchical models from the PyMC example
-  gallery
+  logistic regression, and hierarchical models on PyMC.
 
 ### Phase 2 — Weeks 5–9 (~120 hours): Scoring-rule divergences
 
@@ -229,24 +224,21 @@ code.
 
 ### What I bring
 
-My research requires me to check latent-variable models with structured
+My research will require me to check latent-variable models with non-unique
 priors over sequential negotiation states. I have a genuine, sustained
-need for exactly the tooling I am proposing to build. This is not
-abstract — I will use this library in my own PhD work as I build it,
+need for exactly the tooling I am proposing to build. I will use this library in my own PhD work as I build it,
 which means every design decision will be tested against a real
 scientific use case.
 
-My bounded rationality coursework gave me hands-on experience with the
+My course with PyMC gave me hands-on experience with the
 full PyMC workflow: prior elicitation, MCMC sampling, posterior
-diagnostics, and predictive checks. I have built hierarchical models,
-GLMs, and time series models from scratch in PyMC. I am comfortable
+diagnostics, and predictive checks. I am comfortable
 with ArviZ's InferenceData structure, which is the central data object
 this library wraps.
 
 The prototype on GitHub demonstrates that I can translate the
 theoretical ideas from McLatchie et al. (2025) into working,
-documented Python code. It was written before this proposal was
-submitted — not as an afterthought.
+documented Python code.
 
 ### What I do not yet know and how I will learn it
 
@@ -262,11 +254,11 @@ study the properscoring library and the scoring rules literature
 implementations are correct before building the user-facing interface
 on top of them.
 
-### Realistic scope
+## Final Thoughts
 
-350 hours is enough to deliver Phases 1–3 completely and Phase 4
-partially. I have scoped the milestones conservatively: if computation
-or API design takes longer than expected, Phase 4 documentation can be
+I am a quick learner and I will swiftly cover up my shortcomings. 
+I always believe in delivering on time and fully determined to do that in the assigned 350 hours.
+However, if computation or API design takes longer than expected, Phase 4 documentation can be
 trimmed without compromising the core deliverable. I will not sacrifice
 test coverage to hit a feature count.
 
