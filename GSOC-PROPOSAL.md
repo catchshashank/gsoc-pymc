@@ -9,29 +9,24 @@
 
 ## 1. About Me
 
-I am a PhD candidate at HEC Paris interested in the dynamics of
-conversations and decision making using deep learning and sequential decision models.
-My research involves modelling interactions as partially
-observable stochastic processes — specifically, I use Recurrent State
-Space Models (RSSMs) to infer hidden signals 
-from turn-by-turn speech transcripts.
+I am a PhD candidate at HEC Paris interested in conversational dynamics, ambiguity, 
+and decision making using deep learning models.
+I am currently researching buyer-dealer sales negotiations, specifically 
+belief-formation and updating and their effect on negotiation outcome. 
+In negotiations, priors over hidden states are difficult to elicit since belief is ambiguous 
+and hard to check. I have felt the absence of easy-to-use predictive checking tools
+directly. 
 
-For example. I am currently looking at buyer-dealer sales negotiations, and evaluating 
-belief-updating based on linguistic signals and its effect on price-offer trajectory. 
-In this case, priors over hidden states are difficult to elicit since belief is ambiguous 
-and hard to check. I have felt the absence of principled, easy-to-use predictive checking tools
-directly. When I fit a Gaussian prior over a dealer's
-"concession room" and want to ask whether that prior is compatible with
+For example. When I fit a Gaussian prior over a dealer's
+"concession span" and want to ask whether that prior is compatible with
 what dealers actually say, there is no clean way to do this in PyMC
 without writing substantial boilerplate code by hand. This naturally draws me to this
-project since it forms an integral part of my PhD.
+project since it forms an integral part of my research.
 
-I also completed the PyMC Applied Bayesian Modeling course last month.
-I got a hands-on practice implementing hierarchical models, GLMs, prior and posterior
-predictive checks, and causal inference models in PyMC. The course made
-clear that predictive checks are taught as essential but treated as
-optional in practice — because the tooling makes them too cumbersome
-to run routinely. This proposal addresses that gap directly.
+Additionally, I also completed the PyMC Applied Bayesian Modeling course last month.
+I got a hands-on-practice implementing hierarchical models, GLMs, prior and posterior
+predictive checks, and causal inference models in PyMC. Therefore, I am familiar to
+the PyMC coding environment.
 
 ---
 
@@ -63,10 +58,6 @@ Running a full predictive check in PyMC today requires a practitioner to:
 
 This is five steps of boilerplate before any scientific insight is
 produced. The consequence is that users may skip the checks.
-A survey of PyMC example notebooks confirms this — posterior predictive
-checks appear in fewer than 40% of published examples, and prior
-predictive checks in fewer than 20%, despite both being explicitly
-recommended in the official workflow documentation.
 
 ### 2.3 The Gap This Proposal Fills
 
