@@ -2,34 +2,33 @@
 ## Predictive Model Checking for PyMC: A Scoring-Rule-Based Framework
 
 **Applicant:** Shashank Dubey  
-**Institution:** HEC Paris (PhD Candidate, Marketing / Decision Sciences)  
-**GitHub:** github.com/[your-username]/bayes-corner  
-**Email:** [your email]  
-**Mentors:** (PyMC — prior/posterior predictive check project)  
-**Hours:** 350  
+**Institution:** HEC Paris (PhD Candidate, Quantitative Marketing / Decision Sciences)  
+**GitHub:** github.com/[catchshashank]/gsoc-pymc-pro
+**Email:** [shashank.dubey@hec.edu](shashank.dubey@hec.edu)
 
 ---
 
 ## 1. About Me
 
-I am a PhD candidate at HEC Paris studying conversational dynamics in
-sales negotiations using deep learning and sequential decision models.
-My research involves modelling buyer-seller interactions as partially
+I am a PhD candidate at HEC Paris interested in the dynamics of
+conversations and decision making using deep learning and sequential decision models.
+My research involves modelling interactions as partially
 observable stochastic processes — specifically, I use Recurrent State
-Space Models (RSSMs) with variational autoencoders to infer a dealer's
-hidden reservation price from turn-by-turn speech transcripts.
+Space Models (RSSMs) with variational autoencoders to infer hidden signals 
+from turn-by-turn speech transcripts.
 
-This work sits at an uncomfortable intersection: I use latent-variable
-models whose behaviour I need to criticise, but whose priors over hidden
-states are difficult to elicit and even harder to check. I have felt
-the absence of principled, easy-to-use predictive checking tools
+For example. I am currently looking at buyer-dealer sales negotiations, and evaluating 
+belief-updating based on linguistic signals and its effect on price-offer trajectory. 
+In this case, priors over hidden states are difficult to elicit since belief is ambiguous 
+and hard to check. I have felt the absence of principled, easy-to-use predictive checking tools
 directly and repeatedly. When I fit a Gaussian prior over a dealer's
 "concession room" and want to ask whether that prior is compatible with
 what dealers actually say, there is no clean way to do this in PyMC
-without writing substantial boilerplate code by hand.
+without writing substantial boilerplate code by hand. This naturally draws me to this
+project since it forms an integral part of my PhD.
 
-Beyond my research, I completed a Bayesian Statistics course this year
-in which I implemented hierarchical models, GLMs, prior and posterior
+I also completed the PyMC Applied Bayesian Modeling course last month.
+I got a hands-on practice implementing hierarchical models, GLMs, prior and posterior
 predictive checks, and causal inference models in PyMC. The course made
 clear that predictive checks are taught as essential but treated as
 optional in practice — because the tooling makes them too cumbersome
@@ -47,9 +46,8 @@ after fitting, does my model reproduce the key features of the observed
 data?
 
 Both checks are central to the Bayesian workflow (Gelman et al., 2020;
-Gabry et al., 2019). They are the primary mechanism by which a
-practitioner discovers model misspecification — the near-universal
-condition in applied work where no single parameter value can fully
+Gabry et al., 2019). They are the primary mechanism by which we 
+discover model misspecification — where no single parameter value can fully
 describe the data-generating process.
 
 ### 2.2 The Current State in PyMC
@@ -65,17 +63,13 @@ Running a full predictive check in PyMC today requires a practitioner to:
 6. Repeat for every model iteration
 
 This is five steps of boilerplate before any scientific insight is
-produced. The consequence is predictable: practitioners skip the checks.
+produced. The consequence is that users may skip the checks.
 A survey of PyMC example notebooks confirms this — posterior predictive
 checks appear in fewer than 40% of published examples, and prior
 predictive checks in fewer than 20%, despite both being explicitly
 recommended in the official workflow documentation.
 
 ### 2.3 The Gap This Proposal Fills
-
-CausalPy demonstrated that wrapping PyMC's powerful primitives in a
-clean, task-oriented API dramatically increases adoption of best
-practices. The same opportunity exists for predictive model checking.
 
 The specific gap is: **there is no object in the PyMC ecosystem that
 takes a fitted model and exposes a composable, scoring-rule-grounded
