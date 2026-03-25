@@ -3,7 +3,6 @@
 
 **Applicant:** Shashank Dubey  
 **Institution:** HEC Paris (PhD Candidate, Quantitative Marketing / Decision Sciences)  
-**GitHub:** github.com/[catchshashank]/gsoc-pymc-pro
 **Email:** [shashank.dubey@hec.edu](shashank.dubey@hec.edu)
 
 ---
@@ -14,14 +13,14 @@ I am a PhD candidate at HEC Paris interested in the dynamics of
 conversations and decision making using deep learning and sequential decision models.
 My research involves modelling interactions as partially
 observable stochastic processes — specifically, I use Recurrent State
-Space Models (RSSMs) with variational autoencoders to infer hidden signals 
+Space Models (RSSMs) to infer hidden signals 
 from turn-by-turn speech transcripts.
 
 For example. I am currently looking at buyer-dealer sales negotiations, and evaluating 
 belief-updating based on linguistic signals and its effect on price-offer trajectory. 
 In this case, priors over hidden states are difficult to elicit since belief is ambiguous 
 and hard to check. I have felt the absence of principled, easy-to-use predictive checking tools
-directly and repeatedly. When I fit a Gaussian prior over a dealer's
+directly. When I fit a Gaussian prior over a dealer's
 "concession room" and want to ask whether that prior is compatible with
 what dealers actually say, there is no clean way to do this in PyMC
 without writing substantial boilerplate code by hand. This naturally draws me to this
