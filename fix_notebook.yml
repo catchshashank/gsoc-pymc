@@ -1,0 +1,48 @@
+name: Fix notebook widget metadata
+
+on:
+  push:
+    paths:
+      - '**.ipynb'
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Remove broken widget metadata
+        run: |
+          python3 - << 'EOF'
+          import json, glob, sys
+
+          for path in glob.glob("**/*.ipynb", recursive=True):
+              with open(path) as f:
+                  nb = json.load(f)
+
+              changed = False
+              widgets = nb.get("metadata", {}).get("widgets", {})
+              blob_key = "application/vnd.jupyter.widget-state+json"
+
+              if blob_key in widgets:
+                  blob = widgets[blob_key]
+                  if "state" not in blob:
+                      # Either fix it or remove it entirely
+                      nb["metadata"]["widgets"][blob_key] = {
+                          "state": blob,
+                          "version_major": 2,
+                          "version_minor": 0
+                      }
+                      changed = True
+                      print(f"Fixed: {path}")
+
+              if changed:
+                  with open(path, "w") as f:
+                      json.dump(nb, f, indent=1, ensure_ascii=False)
+          EOF
+
+      - name: Commit fix if needed
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git diff --quiet || (git add "*.ipynb" && git commit -m "auto: fix widget metadata" && git push)
